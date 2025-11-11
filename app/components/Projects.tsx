@@ -1,3 +1,5 @@
+import MarkdownRenderer from './MarkdownRenderer'
+
 interface Project {
   id: string
   title: string
@@ -93,6 +95,15 @@ function ProjectCard({ project, featured = false }: { project: Project; featured
         <p className="text-gray-600 dark:text-gray-300 mb-4">
           {project.description}
         </p>
+
+        {project.long_description && (
+          <div className="mb-4">
+            <MarkdownRenderer
+              content={project.long_description}
+              className="text-sm text-gray-600 dark:text-gray-400 prose-sm"
+            />
+          </div>
+        )}
 
         {project.technologies && project.technologies.length > 0 && (
           <div className="flex flex-wrap gap-2 mb-4">

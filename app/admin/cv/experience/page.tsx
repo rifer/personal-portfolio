@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { createClient } from '@/lib/supabase/client'
+import MarkdownEditor from '@/app/components/MarkdownEditor'
 
 interface Experience {
   id: string
@@ -268,15 +269,12 @@ export default function ExperiencePage() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium mb-1">
-                    Description
-                  </label>
-                  <textarea
-                    rows={6}
-                    placeholder="Describe your responsibilities, achievements, and key projects..."
+                  <MarkdownEditor
+                    label="Description"
                     value={formData.description}
-                    onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md dark:bg-gray-700"
+                    onChange={(value) => setFormData({ ...formData, description: value })}
+                    placeholder="Describe your responsibilities, achievements, and key projects with markdown..."
+                    rows={8}
                   />
                 </div>
 

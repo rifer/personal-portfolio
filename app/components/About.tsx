@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import MarkdownRenderer from './MarkdownRenderer'
 
 interface AboutProps {
   about: any
@@ -30,11 +31,12 @@ export default function About({ about }: AboutProps) {
           )}
 
           <div className={about.profile_image_url ? '' : 'md:col-span-2'}>
-            <div className="prose prose-lg dark:prose-invert max-w-none">
-              <p className="text-gray-700 dark:text-gray-300 leading-relaxed whitespace-pre-line">
-                {about.bio}
-              </p>
-            </div>
+            {about.bio && (
+              <MarkdownRenderer
+                content={about.bio}
+                className="text-gray-700 dark:text-gray-300"
+              />
+            )}
 
             {about.skills && about.skills.length > 0 && (
               <div className="mt-8">

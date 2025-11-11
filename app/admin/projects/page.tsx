@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import ImageUpload from '@/app/components/ImageUpload'
+import MarkdownEditor from '@/app/components/MarkdownEditor'
 
 interface Project {
   id: string
@@ -273,14 +274,12 @@ export default function ProjectsPage() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium mb-1">
-                    Long Description
-                  </label>
-                  <textarea
-                    rows={4}
+                  <MarkdownEditor
+                    label="Long Description"
                     value={formData.long_description}
-                    onChange={(e) => setFormData({ ...formData, long_description: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md dark:bg-gray-700"
+                    onChange={(value) => setFormData({ ...formData, long_description: value })}
+                    placeholder="Detailed project description with markdown support..."
+                    rows={8}
                   />
                 </div>
 

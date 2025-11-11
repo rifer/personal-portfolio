@@ -1,3 +1,5 @@
+import MarkdownRenderer from './MarkdownRenderer'
+
 interface ExperienceItem {
   id: string
   company: string
@@ -67,9 +69,10 @@ export default function Experience({ experience, education }: ExperienceProps) {
                         {exp.company}
                       </p>
                       {exp.description && (
-                        <p className="text-gray-600 dark:text-gray-300 whitespace-pre-line">
-                          {exp.description}
-                        </p>
+                        <MarkdownRenderer
+                          content={exp.description}
+                          className="text-gray-600 dark:text-gray-300 prose-sm"
+                        />
                       )}
                     </div>
                   </div>
@@ -115,9 +118,10 @@ export default function Experience({ experience, education }: ExperienceProps) {
                         </p>
                       )}
                       {edu.description && (
-                        <p className="text-gray-600 dark:text-gray-300 mt-2">
-                          {edu.description}
-                        </p>
+                        <MarkdownRenderer
+                          content={edu.description}
+                          className="text-gray-600 dark:text-gray-300 prose-sm mt-2"
+                        />
                       )}
                     </div>
                   </div>

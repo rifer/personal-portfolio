@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import ImageUpload from '@/app/components/ImageUpload'
+import MarkdownEditor from '@/app/components/MarkdownEditor'
 
 interface AboutData {
   id: string
@@ -120,19 +121,13 @@ export default function AboutPage() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium mb-2">
-                Bio
-              </label>
-              <textarea
-                rows={8}
-                placeholder="Tell your story..."
+              <MarkdownEditor
+                label="Bio"
                 value={formData.bio}
-                onChange={(e) => setFormData({ ...formData, bio: e.target.value })}
-                className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md dark:bg-gray-700"
+                onChange={(value) => setFormData({ ...formData, bio: value })}
+                placeholder="Tell your story with markdown formatting..."
+                rows={10}
               />
-              <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
-                Your professional bio or personal introduction
-              </p>
             </div>
 
             <div>
