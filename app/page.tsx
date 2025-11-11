@@ -7,6 +7,9 @@ import Skills from './components/Skills'
 import Contact from './components/Contact'
 import Navigation from './components/Navigation'
 
+// Disable caching so content updates appear immediately
+export const dynamic = 'force-dynamic'
+
 export default async function Home() {
   const supabase = await createClient()
 
