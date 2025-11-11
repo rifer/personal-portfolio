@@ -20,7 +20,7 @@ interface ProjectsProps {
 }
 
 export default function Projects({ projects }: ProjectsProps) {
-  // Determine featured project: use marked featured, or randomly select one
+  // Determine featured project: use marked featured, or rotate daily
   const { featuredProject, otherProjects } = useMemo(() => {
     if (projects.length === 0) {
       return { featuredProject: null, otherProjects: [] }
@@ -34,9 +34,14 @@ export default function Projects({ projects }: ProjectsProps) {
       const others = projects.filter(p => p.id !== featured.id)
       return { featuredProject: featured, otherProjects: others }
     } else {
-      // Randomly select one project to feature
-      const randomIndex = Math.floor(Math.random() * projects.length)
-      const featured = projects[randomIndex]
+      // Use day of year to rotate featured project daily (deterministic)
+      const now = new Date()
+      const start = new Date(now.getFullYear(), 0, 0)
+      const diff = now.getTime() - start.getTime()
+      const oneDay = 1000 * 60 * 60 * 24
+      const dayOfYear = Math.floor(diff / oneDay)
+      const rotatingIndex = dayOfYear % projects.length
+      const featured = projects[rotatingIndex]
       const others = projects.filter(p => p.id !== featured.id)
       return { featuredProject: featured, otherProjects: others }
     }
