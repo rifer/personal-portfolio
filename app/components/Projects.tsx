@@ -100,7 +100,6 @@ function ProjectCard({ project, featured = false }: { project: Project; featured
           <div className="mb-4">
             <MarkdownRenderer
               content={project.long_description}
-              className="text-sm text-gray-600 dark:text-gray-400 prose-sm"
             />
           </div>
         )}

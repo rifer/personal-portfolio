@@ -71,7 +71,6 @@ export default function Experience({ experience, education }: ExperienceProps) {
                       {exp.description && (
                         <MarkdownRenderer
                           content={exp.description}
-                          className="text-gray-600 dark:text-gray-300 prose-sm"
                         />
                       )}
                     </div>
@@ -118,10 +117,11 @@ export default function Experience({ experience, education }: ExperienceProps) {
                         </p>
                       )}
                       {edu.description && (
-                        <MarkdownRenderer
-                          content={edu.description}
-                          className="text-gray-600 dark:text-gray-300 prose-sm mt-2"
-                        />
+                        <div className="mt-2">
+                          <MarkdownRenderer
+                            content={edu.description}
+                          />
+                        </div>
                       )}
                     </div>
                   </div>

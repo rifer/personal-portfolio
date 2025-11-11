@@ -34,7 +34,6 @@ export default function About({ about }: AboutProps) {
             {about.bio && (
               <MarkdownRenderer
                 content={about.bio}
-                className="text-gray-700 dark:text-gray-300"
               />
             )}
 
