@@ -18,7 +18,7 @@ export default async function Home() {
     supabase.from('about').select('*').limit(1).single(),
     supabase.from('projects').select('*').order('display_order', { ascending: true }),
     supabase.from('experience').select('*').order('display_order', { ascending: true }),
-    supabase.from('education').select('*').order('display_order', { ascending: true }),
+    supabase.from('education').select('*').order('end_date', { ascending: false, nullsFirst: true }),
     supabase.from('contact').select('*').limit(1).single(),
     supabase.from('languages').select('*').order('display_order', { ascending: true }),
   ])
