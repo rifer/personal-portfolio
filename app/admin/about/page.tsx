@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { createClient } from '@/lib/supabase/client'
+import ImageUpload from '@/app/components/ImageUpload'
 
 interface AboutData {
   id: string
@@ -135,29 +136,21 @@ export default function AboutPage() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium mb-2">
-                Profile Image URL
-              </label>
+              <ImageUpload
+                currentImage={formData.profile_image_url}
+                onImageUploaded={(url) => setFormData({ ...formData, profile_image_url: url })}
+                label="Profile Image"
+              />
+              <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                Or paste URL manually:
+              </p>
               <input
                 type="url"
                 placeholder="https://example.com/profile.jpg"
                 value={formData.profile_image_url}
                 onChange={(e) => setFormData({ ...formData, profile_image_url: e.target.value })}
-                className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md dark:bg-gray-700"
+                className="w-full px-3 py-2 mt-1 border border-gray-300 dark:border-gray-600 rounded-md dark:bg-gray-700 text-sm"
               />
-              {formData.profile_image_url && (
-                <div className="mt-2">
-                  <img
-                    src={formData.profile_image_url}
-                    alt="Profile preview"
-                    className="h-32 w-32 rounded-full object-cover"
-                    onError={(e) => {
-                      e.currentTarget.src = ''
-                      e.currentTarget.alt = 'Invalid image URL'
-                    }}
-                  />
-                </div>
-              )}
             </div>
 
             <div>

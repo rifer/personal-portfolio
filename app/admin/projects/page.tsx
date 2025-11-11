@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { createClient } from '@/lib/supabase/client'
+import ImageUpload from '@/app/components/ImageUpload'
 
 interface Project {
   id: string
@@ -284,14 +285,20 @@ export default function ProjectsPage() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium mb-1">
-                    Image URL
-                  </label>
+                  <ImageUpload
+                    currentImage={formData.image_url}
+                    onImageUploaded={(url) => setFormData({ ...formData, image_url: url })}
+                    label="Project Image"
+                  />
+                  <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                    Or paste URL manually:
+                  </p>
                   <input
                     type="url"
+                    placeholder="https://example.com/image.jpg"
                     value={formData.image_url}
                     onChange={(e) => setFormData({ ...formData, image_url: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md dark:bg-gray-700"
+                    className="w-full px-3 py-2 mt-1 border border-gray-300 dark:border-gray-600 rounded-md dark:bg-gray-700 text-sm"
                   />
                 </div>
 
