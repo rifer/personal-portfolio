@@ -73,11 +73,22 @@ CREATE TABLE IF NOT EXISTS contact (
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT TIMEZONE('utc', NOW())
 );
 
+-- Languages Table
+CREATE TABLE IF NOT EXISTS languages (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    name VARCHAR(255) NOT NULL,
+    proficiency VARCHAR(50) NOT NULL CHECK (proficiency IN ('native', 'fluent', 'advanced', 'intermediate', 'beginner')),
+    display_order INTEGER DEFAULT 0,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT TIMEZONE('utc', NOW()),
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT TIMEZONE('utc', NOW())
+);
+
 -- Create indexes for better query performance
 CREATE INDEX IF NOT EXISTS idx_projects_featured ON projects(featured);
 CREATE INDEX IF NOT EXISTS idx_projects_display_order ON projects(display_order);
 CREATE INDEX IF NOT EXISTS idx_experience_display_order ON experience(display_order);
 CREATE INDEX IF NOT EXISTS idx_education_display_order ON education(display_order);
+CREATE INDEX IF NOT EXISTS idx_languages_display_order ON languages(display_order);
 
 -- Create updated_at trigger function
 CREATE OR REPLACE FUNCTION update_updated_at_column()
@@ -104,6 +115,9 @@ CREATE TRIGGER update_education_updated_at BEFORE UPDATE ON education
 CREATE TRIGGER update_contact_updated_at BEFORE UPDATE ON contact
     FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
 
+CREATE TRIGGER update_languages_updated_at BEFORE UPDATE ON languages
+    FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
+
 -- Row Level Security (RLS) Policies
 -- Enable RLS on all tables
 ALTER TABLE projects ENABLE ROW LEVEL SECURITY;
@@ -111,6 +125,7 @@ ALTER TABLE about ENABLE ROW LEVEL SECURITY;
 ALTER TABLE experience ENABLE ROW LEVEL SECURITY;
 ALTER TABLE education ENABLE ROW LEVEL SECURITY;
 ALTER TABLE contact ENABLE ROW LEVEL SECURITY;
+ALTER TABLE languages ENABLE ROW LEVEL SECURITY;
 
 -- Public read access for all tables (anyone can view portfolio content)
 CREATE POLICY "Public read access for projects" ON projects
@@ -126,6 +141,9 @@ CREATE POLICY "Public read access for education" ON education
     FOR SELECT USING (true);
 
 CREATE POLICY "Public read access for contact" ON contact
+    FOR SELECT USING (true);
+
+CREATE POLICY "Public read access for languages" ON languages
     FOR SELECT USING (true);
 
 -- Authenticated users can perform all operations (for admin access)
@@ -172,6 +190,15 @@ CREATE POLICY "Authenticated users can update contact" ON contact
     FOR UPDATE TO authenticated USING (true);
 
 CREATE POLICY "Authenticated users can delete contact" ON contact
+    FOR DELETE TO authenticated USING (true);
+
+CREATE POLICY "Authenticated users can insert languages" ON languages
+    FOR INSERT TO authenticated WITH CHECK (true);
+
+CREATE POLICY "Authenticated users can update languages" ON languages
+    FOR UPDATE TO authenticated USING (true);
+
+CREATE POLICY "Authenticated users can delete languages" ON languages
     FOR DELETE TO authenticated USING (true);
 
 -- Insert initial empty rows for singleton tables (about and contact)
